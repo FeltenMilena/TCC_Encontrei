@@ -14,7 +14,7 @@ export default function Dashboard() {
                 headers: { user_id }
             });
 
-            //console.log(response.data);
+            //TODO: exemplo de comentário.
             setSpots(response.data);
         }
         
@@ -28,7 +28,7 @@ export default function Dashboard() {
                     <li key={spot._id}>
                         <header style={{ backgroundImage: `url(${spot.thumbnail_url})`}}/>
                         <strong>{spot.company}</strong>
-                        <span>{spot.price ? `R$${spot.price}/mês` : 'A COMBINAR'}</span>
+                        <span>{spot.price ? `R$${spot.price}/mês` : 'SALÁRIO À COMBINAR'}</span>
                     </li>
                 ))}
             </ul>
