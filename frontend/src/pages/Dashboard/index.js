@@ -5,34 +5,34 @@ import api from '../../services/api';
 import './Styles.css';
 
 export default function Dashboard() {
-    const [spots, setSpots] = useState([]);
+    const [registerJobs, setRegisterJobs] = useState([]);
 
     useEffect(() => {
-        async function loadSpots() {
+        async function loadRegisterJobs() {
             const user_id = localStorage.getItem('user');
             const response = await api.get('/dashboard', {
                 headers: { user_id }
             });
 
             //TODO: exemplo de comentário.
-            setSpots(response.data);
+            setRegisterJobs(response.data);
         }
         
-        loadSpots();
+        loadRegisterJobs();
     }, []);
 
     return (
         <>
-            <ul className="spot-list">
-                {spots.map(spot => (
-                    <li key={spot._id}>
-                        <header style={{ backgroundImage: `url(${spot.thumbnail_url})`}}/>
-                        <strong>{spot.company}</strong>
-                        <span>{spot.price ? `R$${spot.price}/mês` : 'SALÁRIO À COMBINAR'}</span>
+            <ul className="registerJob-list">
+                {registerJobs.map(registerJob => (
+                    <li key={registerJob._id}>
+                        <header style={{ backgroundImage: `url(${registerJob.thumbnail_url})`}}/>
+                        <strong>{registerJob.company}</strong>
+                        <span>{registerJob.wage ? `R$${registerJob.wage}/mês` : 'SALÁRIO À COMBINAR'}</span>
                     </li>
                 ))}
             </ul>
-            <Link to="/new">
+            <Link to="/opportunity">
                 <button className="btn">Cadastrar nova vaga</button> 
             </Link>
         </>
