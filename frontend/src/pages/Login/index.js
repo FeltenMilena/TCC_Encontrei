@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../services/api';
 
-export default function Login(){
+export default function Login({ history }){
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -17,6 +17,7 @@ export default function Login(){
 
         localStorage.setItem('user', _id);
 
+        history.push('/dashboard');
     }
     return (
         <>       
@@ -59,9 +60,8 @@ export default function Login(){
                 value={passwordConfirm}
                 onChange={event => setPasswordConfirm(event.target.value)}
                 />
-                <Link to="/dashboard">
-                    <button className="btn" type="submit">Cadastrar-se</button>
-                </Link>
+                
+                <button className="btn" type="submit">Cadastrar-se</button>
                 <br/>
                 <Link to="/loginCompany">
                     <button className="btn" type="submit">Voltar</button>
