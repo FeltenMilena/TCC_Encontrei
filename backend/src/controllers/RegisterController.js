@@ -8,9 +8,9 @@ module.exports = {
         let userEmail = await User.findOne({ email });
         let userPassword = await User.findOne({ password });
 
-        if (!userEmail){
+        if (!user){
             return res.status(400).json({ error: 'Usuário não cadastrado'});
         }
-        return res.json(userEmail);
+        return res.json(user);
     }
 };
