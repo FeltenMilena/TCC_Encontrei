@@ -2,16 +2,14 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import api from '../../services/api';
 
-export default function Login({ history }){
-    const [name, setName] = useState('');
+export default function LoginCompany({ history }){
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [passwordConfirm, setPasswordConfirm] = useState('');
 
     async function handleSubmit(event){
         event.preventDefault();
         
-        const response = await api.post('/sessions', { name, email, password, passwordConfirm });
+        const response = await api.post('/registers', { email, password });
 
         const { _id } = response.data;
 
@@ -26,13 +24,6 @@ export default function Login({ history }){
             </p>
 
             < form onSubmit={handleSubmit}>
-                <label htmlFor="name">NOME *</label>
-                <input 
-                id="name" 
-                placeholder="Nome da sua empresa"
-                value={name}
-                onChange={event => setName(event.target.value)}
-                />
 
                 <label htmlFor="email">E-MAIL *</label>
                 <input 
@@ -52,19 +43,10 @@ export default function Login({ history }){
                 onChange={event => setPassword(event.target.value)}
                 />
 
-                <label htmlFor="passwordConfirm">CONFIRMAR SENHA *</label>
-                <input 
-                id="passwordConfirm" 
-                type="password" 
-                placeholder="Confirme sua senha"
-                value={passwordConfirm}
-                onChange={event => setPasswordConfirm(event.target.value)}
-                />
-                
-                <button className="btn" type="submit">Cadastrar-se</button>
+                <button className="btn" type="submit">Entrar</button>
                 <br/>
-                <Link to="/loginCompany">
-                    <button className="btn" type="submit">Voltar</button>
+                <Link to="/">
+                    <button className="btn" type="submit">Cadastrar-se</button>
                 </Link>
             </form>
         </>
