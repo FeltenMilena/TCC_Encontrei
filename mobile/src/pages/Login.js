@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { View, AsyncStorage, KeyboardAvoidingView, Platform, Image, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, KeyboardAvoidingView, Platform, Image, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import api from '../services/api';
 
@@ -7,25 +8,30 @@ import logo from '../assets/LogoMobile1.png';
 
 export default function Login({ navigation }){
     const [email, setEmail] = useState('');
-    const [techs, setTechs] = useState('');
+    const [prerequisites, setPrerequisites] = useState('');
 
-    useEffect(() => {
+    {/*useEffect(() => {
         AsyncStorage.getItem('user').then(user => {
             if(user) {
                 navigation.navigate('List');
             }
         })
-    }, []);
+    }, []);*/}
 
     async function handleSubmit(){
+        console.log(email);
         const response = await api.post('/sessions', {
             email
         });
 
         const { _id } = response.data;
 
+        console.log(_id);
+
         await AsyncStorage.setItem('user', _id);
-        await AsyncStorage.setItem('techs', techs);
+        await AsyncStorage.setItem('prerequisites', prerequisites);
+
+        console.log( AsyncStorage.getItem('user'));
 
         navigation.navigate('List');
     }
@@ -47,15 +53,15 @@ export default function Login({ navigation }){
                     onChangeText={setEmail}
                 />
 
-                <Text style={styles.label}>TECNOLOGIAS *</Text>
+                <Text style={styles.label}>CONHECIMENTOS * (separados por vírgula)</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder="Tecnologias de interesse"
+                    placeholder="Pacote Office, Inglês Básico."
                     placeholderTextColor="#999"
                     autoCapitalize="words"
                     autoCorrect={false}
-                    value={techs}
-                    onChangeText={setTechs}
+                    value={prerequisites}
+                    onChangeText={setPrerequisites}
                 />
 
                 <TouchableOpacity onPress={handleSubmit} style={styles.button}>
