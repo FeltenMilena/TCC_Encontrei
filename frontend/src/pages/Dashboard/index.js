@@ -1,18 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import clsx from 'clsx';
 import api from '../../services/api';
-
 
 import './Styles.css';
 
 export default function Dashboard() {
     const [registerJobs, setRegisterJobs] = useState([]);
-    const [expanded, setExpanded] = React.useState(false);
 
-    const handleExpandClick = () => {
-        setExpanded(!expanded);
-    };
 
     useEffect(() => {
         async function loadRegisterJobs() {
@@ -21,7 +15,6 @@ export default function Dashboard() {
                 headers: { user_id }
             });
 
-            //TODO: exemplo de comentário.
             setRegisterJobs(response.data);
         }
         
