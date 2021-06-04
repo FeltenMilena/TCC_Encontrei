@@ -11,8 +11,6 @@ module.exports = {
        // let userName = await User.findOne({ name });
        //Busca os valores no banco e armazena nas variáveis decladas.
         let userEmail = await User.findOne({ email });
-        let userPassword = await User.findOne({ password });
-        let userPasswordConfirm = await User.findOne({ passwordConfirm });
 
         //Validação de usuário.
         if (!userEmail){

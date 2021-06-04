@@ -45,7 +45,7 @@ export default function LoginCompany({ history }){
 
                 <button className="btn" type="submit">Entrar</button>
                 <br/>
-                <Link to="/">
+                <Link to="/loginCompany">
                     <button className="btn" type="submit">Cadastrar-se</button>
                 </Link>
             </form>

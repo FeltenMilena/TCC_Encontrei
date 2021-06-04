@@ -3,17 +3,23 @@ const Booking = require('../models/Booking');
 module.exports = {
     async store(req, res){
         const { user_id } = req.headers;
-        const { spot_id } = req.params;
+        const { registerJob_id } = req.params;
         const { date } = req.body;
 
         const booking = await Booking.create({
-            user: user_id,
-            spot: spot_id,
+            userCandidate: user_id,
+            registerJob: registerJob_id,
             date,
         });
 
-        await booking.populate('spot').populate('user').execPopulate();
+        await booking.populate('registerJob').populate('userCandidate').execPopulate();
 
+        const ownerSocket = req.connectedUsers[booking.registerJob.user];
+
+        if (ownerSocket) {
+            req.io.to(ownerSocket).emit('booking_request', booking);
+        }
+        
         return res.json(booking);
     }
 };

@@ -63,7 +63,7 @@ export default function Login({ history }){
                 
                 <button className="btn" type="submit">Cadastrar-se</button>
                 <br/>
-                <Link to="/loginCompany">
+                <Link to="/">
                     <button className="btn" type="submit">Voltar</button>
                 </Link>
             </form>

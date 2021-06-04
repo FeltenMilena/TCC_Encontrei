@@ -3,13 +3,13 @@ const mongoose = require('mongoose');
 const BookingSchema = new mongoose.Schema({
     date: String,
     approved: Boolean,
-    user: {
+    userCandidate: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'User'
+        ref: 'UserCandidate'
     },
-    spot: {
+    registerJob: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Spot'
+        ref: 'RegisterJob'
     }
 });
 

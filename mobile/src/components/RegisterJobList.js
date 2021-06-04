@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
+import { withNavigation } from 'react-navigation';
 import { View, StyleSheet, Text, FlatList, Image, TouchableOpacity } from 'react-native';
 
 import api from '../services/api';
 
-export default function RegisterJobList({prerequisite}){
+function RegisterJobList({ prerequisite, navigation }){
     const [registerJobs, setRegisterJobs] = useState([]);
 
     useEffect(() => {
@@ -18,6 +19,10 @@ export default function RegisterJobList({prerequisite}){
         loadRegisterJob();
     }, []);
 
+    function handleNavigate(id) {
+        navigation.navigate('Book', { id });
+    }
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Empresas com pré-requisitos em: <Text style={styles.bold}>{prerequisite}</Text></Text>
@@ -30,10 +35,10 @@ export default function RegisterJobList({prerequisite}){
                 showsHorizontalScrollIndicator={false}
                 renderItem={({ item }) => (
                     <View style={styles.listItem}>
-                        <Image style={styles.thumbnail} source={{ uri: item.thumbnail_url }}></Image>
+                        <Image style={styles.thumbnail} source={{ uri: item.thumbnail_url }} />
                         <Text style={styles.company}>{item.company}</Text>
                         <Text style={styles.wage}>{item.wage ? `R$${item.wage}/mês` : 'SALÁRIO À COMBINAR'}</Text>
-                        <TouchableOpacity onPress={() => {}} style={styles.button}>
+                        <TouchableOpacity onPress={() => handleNavigate(item._id)} style={styles.button}>
                             <Text style={styles.buttonText}>Solicitar Vaga</Text>
                         </TouchableOpacity>
                     </View>
@@ -102,3 +107,5 @@ const styles = StyleSheet.create({
         fontSize: 15,
     },
 });
+
+export default withNavigation(RegisterJobList);

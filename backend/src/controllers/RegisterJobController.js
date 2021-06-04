@@ -3,7 +3,6 @@ const RegisterJob = require('../models/RegisterJob');
 
 module.exports = {
 
-    // Metodo GET pasta RegisterJob
     async index(req, res){
         const { prerequisite } = req.query;
 

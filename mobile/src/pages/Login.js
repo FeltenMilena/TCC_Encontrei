@@ -10,35 +10,35 @@ export default function Login({ navigation }){
     const [email, setEmail] = useState('');
     const [prerequisites, setPrerequisites] = useState('');
 
-    {/*useEffect(() => {
+    useEffect(() => {
         AsyncStorage.getItem('user').then(user => {
             if(user) {
                 navigation.navigate('List');
             }
         })
-    }, []);*/}
+    }, []);
 
     async function handleSubmit(){
         console.log(email);
-        const response = await api.post('/sessions', {
+        const response = await api.post('/sessionCandidates', {
             email
         });
 
         const { _id } = response.data;
 
-        console.log(_id);
-
-        await AsyncStorage.setItem('user', _id);
+        await AsyncStorage.setItem('userCandidate', _id);
         await AsyncStorage.setItem('prerequisites', prerequisites);
-
-        console.log( AsyncStorage.getItem('user'));
 
         navigation.navigate('List');
     }
 
     return (
         <KeyboardAvoidingView enabled={Platform.OS == 'ios'} behavior="padding" style={styles.container}>
-            <Image source={logo}></Image>
+            <Image 
+            style={styles.logo}
+            source={logo}
+            acessibilidadeHint="Logo do Encontrei."
+            ></Image>
             
             <View style={styles.form}>
                 <Text style={styles.label}>SEU E-MAIL *</Text>
@@ -51,12 +51,14 @@ export default function Login({ navigation }){
                     autoCorrect={false}
                     value={email}
                     onChangeText={setEmail}
+                    accessibilityLabel="Digite seu e-mail"
                 />
 
                 <Text style={styles.label}>CONHECIMENTOS * (separados por vírgula)</Text>
                 <TextInput
                     style={styles.input}
-                    placeholder="Pacote Office, Inglês Básico."
+                    placeholder="Exemplo: Pacote Office, Inglês Básico."
+                    accessibilityLabel="Seus conhecimentos, cursos ou qualificações para filtro de vagas."
                     placeholderTextColor="#999"
                     autoCapitalize="words"
                     autoCorrect={false}
@@ -64,7 +66,9 @@ export default function Login({ navigation }){
                     onChangeText={setPrerequisites}
                 />
 
-                <TouchableOpacity onPress={handleSubmit} style={styles.button}>
+                <TouchableOpacity 
+                onPress={handleSubmit} style={styles.button}
+                accessibilityLabel="Botão para filtrar vagas.">
                     <Text style={styles.buttonText}>Encontrar vagas</Text>
                 </TouchableOpacity>
             </View>
@@ -74,9 +78,15 @@ export default function Login({ navigation }){
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+    },
+
+    logo: {
+        height: 100,
+        resizeMode: "contain",
+        alignSelf: 'center',
+        marginTop: 10
     },
 
     form: {

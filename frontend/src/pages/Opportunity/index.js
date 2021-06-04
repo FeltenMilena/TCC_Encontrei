@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import api from '../../services/api';
+import { Link } from 'react-router-dom';
 
 import camera from '../../assets/camera.svg';
 
@@ -103,6 +104,10 @@ export default function New({ history }){
             </label>
 
             <button type="submit" className="btn">Cadastrar vaga</button>
+            <br/>
+            <Link to="/dashboard">
+                <button className="btn" type="submit">Voltar</button>
+            </Link>
         </form>
     )
 }
