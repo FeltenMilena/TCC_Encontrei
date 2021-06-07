@@ -8,6 +8,7 @@ import {
     TextInput, 
     TouchableOpacity, 
     StyleSheet,
+    ScrollView
 } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -28,7 +29,10 @@ export default function LoginCandidate({ navigation }){
     }, []);*/}
 
     async function handleSubmit(){
-        const response = await api.post('/registerCandidates', { email, password });
+        const response = await api.post('/registerCandidates', { 
+            email, 
+            password,
+        });
 
         const { _id } = response.data;
 
@@ -42,6 +46,7 @@ export default function LoginCandidate({ navigation }){
     }
 
     return (
+        <ScrollView>
         <KeyboardAvoidingView enabled={Platform.OS == 'ios'} behavior="padding" style={styles.container}>
             <Image 
             source={logo}
@@ -88,6 +93,7 @@ export default function LoginCandidate({ navigation }){
                 </TouchableOpacity>
             </View>
         </KeyboardAvoidingView>
+        </ScrollView>
     );
 }
 

@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 
 const BookingSchema = new mongoose.Schema({
-    date: String,
+    message: String,
     approved: Boolean,
     userCandidate: {
         type: mongoose.Schema.Types.ObjectId,

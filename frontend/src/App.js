@@ -1,33 +1,42 @@
-import React from 'react';
+import React, { Component } from 'react';
 import './App.css';
-import apiVLibras from './services/apiVLibras';
 //import Dashboard from './pages/Dashboard/index';
 
 import logo from './assets/encontrei.svg';
 
 import Routes from './routes';
-import { Component } from 'react';
 
 class App extends Component {
 
-  state = {
-    vlibras: [],
+  constructor(props) {
+    super(props);
+    this.widgetSrc = "https://vlibras.gov.br/app";
+    this.scriptSrc = "https://vlibras.gov.br/app/vlibras-plugin.js";
   }
 
-  async componentDidMount(){
-    const response = await apiVLibras.get('');
+  init() {
+    this.script = document.createElement("script");
+    this.script.src = this.scriptSrc;
+    this.script.async = true;
+    this.script.onload = (load) => {
+      new window.VLibras.Widget(this.widgetSrc);
+    };
+    document.head.appendChild(this.script);
+  }
 
-    console.log(response.data);
-
+  componentDidMount() {
+    this.init();
   }
 
   render (){
     return(
     <div className="container">
-
-
-
-
+      <div vw="true" className="enabled">
+        <div vw-access-button="true" className="active"></div>
+        <div vw-plugin-wrapper="true">
+          <div className="vw-plugin-top-wrapper"></div>
+        </div>
+      </div>
       <img src={logo} alt="Encontrei"/>
       <div className="encontrei">
         <p>

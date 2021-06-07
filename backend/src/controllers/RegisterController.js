@@ -14,3 +14,14 @@ module.exports = {
         return res.json(userEmail);
     }
 };
+
+/*
+        var { email, password } = req.body;
+
+        let userCandidate = await UserCandidate.find({ email, password });
+
+        if(userCandidate.length === 0){
+            return res.status(400).json({ error: 'Usuário ou senha inválido.'});
+        }
+        return res.json(userCandidate);
+*/

@@ -34,5 +34,12 @@ module.exports = {
         })
 
         return res.json(registerJob)
-    }
+    },
+
+    async suspend(req, res){
+        const { _id } = req.params;
+        const deleteJob = await RegisterJob.findByIdAndDelete({ _id });
+
+        return res.json(deleteJob);
+    },
 };

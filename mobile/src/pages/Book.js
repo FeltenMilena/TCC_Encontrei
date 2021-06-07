@@ -5,14 +5,14 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import api from '../services/api';
 
 export default function Book({ navigation }){
-    const [date, setDate] = useState('');
+    const [message, setMessage] = useState('');
     const id = navigation.getParam('id');
 
     async function handleSubmit() {
         const user_id = await AsyncStorage.getItem('userCandidate');
 
         await api.post(`/registerJobs/${id}/bookings`, {
-            date
+            message
         }, {
             headers: { user_id }
         })
@@ -33,12 +33,12 @@ export default function Book({ navigation }){
             <Text style={styles.label}>MENSAGEM PARA A EMPRESA *</Text>
             <TextInput
             style={styles.input}
-            placeholder="Seja breve"
+            placeholder="Escreva alguma mensagem para a empresa."
             placeholderTextColor="#999"
-            autoCapitalize="words"
+            autoCapitalize="none"
             autoCorrect={false}
-            value={date}
-            onChangeText={setDate}
+            value={message}
+            onChangeText={setMessage}
             />
     
             <TouchableOpacity onPress={handleSubmit} style={styles.button}>

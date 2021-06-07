@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, KeyboardAvoidingView, Platform, Image, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
+import { 
+    View, 
+    KeyboardAvoidingView, 
+    Platform, 
+    Image, 
+    Text, 
+    TextInput, 
+    TouchableOpacity, 
+    StyleSheet,
+    ScrollView
+} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import api from '../services/api';
@@ -7,40 +17,54 @@ import api from '../services/api';
 import logo from '../assets/LogoMobile1.png';
 
 export default function Login({ navigation }){
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [prerequisites, setPrerequisites] = useState('');
 
-    useEffect(() => {
+    {/*useEffect(() => {
         AsyncStorage.getItem('user').then(user => {
             if(user) {
                 navigation.navigate('List');
             }
         })
-    }, []);
+    }, []);*/}
 
     async function handleSubmit(){
-        console.log(email);
-        const response = await api.post('/sessionCandidates', {
+        const response = await api.post('/registerCandidates', {
+            name,
             email
         });
 
         const { _id } = response.data;
 
         await AsyncStorage.setItem('userCandidate', _id);
+        await AsyncStorage.setItem('name', name);
         await AsyncStorage.setItem('prerequisites', prerequisites);
 
         navigation.navigate('List');
     }
 
     return (
+        <ScrollView>
         <KeyboardAvoidingView enabled={Platform.OS == 'ios'} behavior="padding" style={styles.container}>
             <Image 
             style={styles.logo}
             source={logo}
             acessibilidadeHint="Logo do Encontrei."
             ></Image>
-            
-            <View style={styles.form}>
+                <Text style={styles.label}>ENCONTRE SUA VAGA DE EMPREGO</Text>
+                
+                <View style={styles.form}>
+                    <Text style={styles.label}>SEU NOME *</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Digite seu nome"
+                        placeholderTextColor="#999"
+                        autoCapitalize="words"
+                        autoCorrect={false}
+                        value={name}
+                        onChangeText={setName}
+                    />
                 <Text style={styles.label}>SEU E-MAIL *</Text>
                 <TextInput
                     style={styles.input}
@@ -54,25 +78,26 @@ export default function Login({ navigation }){
                     accessibilityLabel="Digite seu e-mail"
                 />
 
-                <Text style={styles.label}>CONHECIMENTOS * (separados por vírgula)</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Exemplo: Pacote Office, Inglês Básico."
-                    accessibilityLabel="Seus conhecimentos, cursos ou qualificações para filtro de vagas."
-                    placeholderTextColor="#999"
-                    autoCapitalize="words"
-                    autoCorrect={false}
-                    value={prerequisites}
-                    onChangeText={setPrerequisites}
-                />
+                    <Text style={styles.label}>CONHECIMENTOS OU HABILIDADES * (separados por vírgula)</Text>
+                    <TextInput
+                        style={styles.input}
+                        placeholder="Exemplo: Pacote Office, Inglês Básico."
+                        accessibilityLabel="Seus conhecimentos, cursos ou qualificações para filtro de vagas."
+                        placeholderTextColor="#999"
+                        autoCapitalize="words"
+                        autoCorrect={false}
+                        value={prerequisites}
+                        onChangeText={setPrerequisites}
+                    />
 
-                <TouchableOpacity 
-                onPress={handleSubmit} style={styles.button}
-                accessibilityLabel="Botão para filtrar vagas.">
-                    <Text style={styles.buttonText}>Encontrar vagas</Text>
-                </TouchableOpacity>
-            </View>
+                    <TouchableOpacity 
+                    onPress={handleSubmit} style={styles.button}
+                    accessibilityLabel="Botão para filtrar vagas.">
+                        <Text style={styles.buttonText}>Encontrar vagas</Text>
+                    </TouchableOpacity>
+                </View>
         </KeyboardAvoidingView>
+        </ScrollView>
     );
 }
 

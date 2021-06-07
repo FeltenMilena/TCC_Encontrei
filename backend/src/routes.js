@@ -24,6 +24,7 @@ routes.post('/registerJobs/:registerJob_id/bookings', BookingController.store);
 
 routes.get('/registerJobs', RegisterJobController.index);
 routes.post('/registerJobs', upload.single('thumbnail'), RegisterJobController.store);
+routes.delete('/registerJobs/:_id', RegisterJobController.suspend);
 
 routes.post('/registers', RegisterController.store);
 routes.post('/registerCandidates', RegisterCandidateController.store);

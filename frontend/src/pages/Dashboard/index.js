@@ -44,19 +44,30 @@ export default function Dashboard() {
         setRequests(requests.filter(request => request._id !== id));
     }
     
-      async function handleReject(id) {
+    async function handleReject(id) {
         await api.post(`/bookings/${id}/rejections`);
     
         setRequests(requests.filter(request => request._id !== id));
     }
 
+    async function handleDelete(id) {
+        if(window.confirm("Deseja realmente excluir vaga?")){
+            var result = await api.delete(`/registerJobs/`+id);
+            if(result.status === 200){
+                window.location.href = '/dashboard';
+            }else{
+                alert('Ocorreu um erro, por favor tente novamente!');
+            }
+        }
+    }
+    
     return (
         <>
             <ul className="notifications">
                 {requests.map(request => (
                 <li key={request._id}>
                     <p>
-                    <strong>{request.userCandidate.email}</strong> está solicitando uma reserva de vaga <strong>{request.registerJob.company}<br/></strong> Mensagem: <strong>{request.date}</strong>
+                    <strong>{request.userCandidate.name}</strong> está solicitando uma reserva de vaga <strong>{request.registerJob.company}<br/></strong> Mensagem: <strong>{request.date}</strong>
                     </p>
                     <button className="accept" onClick={() => handleAccept(request._id)}>ACEITAR</button>
                     <button className="reject" onClick={() => handleReject(request._id)}>REJEITAR</button>
@@ -72,6 +83,8 @@ export default function Dashboard() {
                         <span>{registerJob.wage ? `R$${registerJob.wage}/mês` : 'SALÁRIO À COMBINAR'}</span>
                         <span>Resumo: {registerJob.abstract}</span>
                         <span>Pré-requisitos: {registerJob.prerequisites}</span>
+                        <br></br>
+                        <button className="btnDelete" onClick={() => handleDelete(registerJob._id)}>Excluir</button>
                     </li>
                 ))}
             </ul>
