@@ -67,7 +67,7 @@ export default function Dashboard() {
                 {requests.map(request => (
                 <li key={request._id}>
                     <p>
-                    <strong>{request.userCandidate.name}</strong> está solicitando uma reserva de vaga <strong>{request.registerJob.company}<br/></strong> Mensagem: <strong>{request.date}</strong>
+                    <strong>{request.userCandidate.name}</strong> está solicitando uma reserva de vaga <strong>{request.registerJob.company}<br/></strong> Mensagem: <strong>{request.message}</strong>
                     </p>
                     <button className="accept" onClick={() => handleAccept(request._id)}>ACEITAR</button>
                     <button className="reject" onClick={() => handleReject(request._id)}>REJEITAR</button>
@@ -82,7 +82,7 @@ export default function Dashboard() {
                         <strong>{registerJob.company}</strong>
                         <span>{registerJob.wage ? `R$${registerJob.wage}/mês` : 'SALÁRIO À COMBINAR'}</span>
                         <span>Resumo: {registerJob.abstract}</span>
-                        <span>Pré-requisitos: {registerJob.prerequisites}</span>
+                        <span>Pré-requisitos: {registerJob.prerequisites.join(', ')}</span>
                         <br></br>
                         <button className="btnDelete" onClick={() => handleDelete(registerJob._id)}>Excluir</button>
                     </li>
