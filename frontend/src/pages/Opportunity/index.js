@@ -86,7 +86,7 @@ export default function New({ history }){
                 onChange={event => setAbstract(event.target.value)}
             />
 
-            <label htmlFor="prerequisites">PRÉ-REQUISITOS * <span>(separados por vírgula)</span></label>
+            <label htmlFor="prerequisites">PRÉ-REQUISITOS/ HABILIDADES * <span>(separados por vírgula)</span></label>
             <input
                 id="prerequisites"
                 placeholder="Pré-requisitos da vaga"

@@ -90,6 +90,11 @@ export default function Dashboard() {
             </ul>
             <Link to="/opportunity">
                 <button className="btn">Cadastrar nova vaga</button> 
+                <br/>
+            </Link>
+            <br/>
+            <Link to="/">
+                <button className="btnSair">Sair</button>
             </Link>
         </>
     )

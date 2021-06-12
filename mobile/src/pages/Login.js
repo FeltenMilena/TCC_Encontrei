@@ -31,7 +31,6 @@ export default function Login({ navigation }){
 
     async function handleSubmit(){
         const response = await api.post('/registerCandidates', {
-            name,
             email
         });
 
@@ -42,6 +41,10 @@ export default function Login({ navigation }){
         await AsyncStorage.setItem('prerequisites', prerequisites);
 
         navigation.navigate('List');
+    }
+
+    function handleSair() {
+        navigation.navigate('LoginCandidate');
     }
 
     return (
@@ -95,6 +98,10 @@ export default function Login({ navigation }){
                     accessibilityLabel="Botão para filtrar vagas.">
                         <Text style={styles.buttonText}>Encontrar vagas</Text>
                     </TouchableOpacity>
+                    <TouchableOpacity onPress={handleSair} style={[styles.button, styles.buttonSair]}>
+                        <Text style={styles.buttonText}>Sair</Text>
+                    </TouchableOpacity>
+
                 </View>
         </KeyboardAvoidingView>
         </ScrollView>
@@ -143,6 +150,11 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 4,
+    },
+
+    buttonSair: {
+        backgroundColor: '#E55E5E',
+        marginTop: 10,
     },
 
     buttonText: {
